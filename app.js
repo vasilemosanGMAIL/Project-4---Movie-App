@@ -7,24 +7,16 @@ const imageURL = "https://image.tmdb.org/t/p/w1280";
 //Search Variables
 const movieButton = document.getElementById("search-btn");
 const searchForm = document.getElementById("searchForm");
-const movieTitle = document.getElementById("title1");
-const movieImage = document.getElementById("logo");
-const home = document.getElementById("home");
 const populateMovie = document.getElementById("populateMovie");
 //functions
 document.addEventListener("DOMContentLoaded", getMovies(themoviedbURL));
 movieButton.addEventListener("click", searchMovie);
-home.addEventListener("click", getMovies(themoviedbURL));
-
-// getMovies(themoviedbURL);
-
+//getMovies function
 async function getMovies(linkURL) {
   try {
     const movielist = await fetch(linkURL);
     const movieData = await movielist.json();
     //console.log(movieData);
-    // movieTitle.innerHTML = movieData.results[4].title;
-    // movieImage.src = `${imageURL}${movieData.results[4].poster_path}`;
     movieData.results.forEach((element) => {
       const div = document.createElement("div");
       const img = document.createElement("img");
