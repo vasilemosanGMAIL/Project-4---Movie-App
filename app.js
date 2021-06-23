@@ -5,18 +5,15 @@ const searchURL =
   "https://api.themoviedb.org/3/search/movie?&api_key=50cc2d929715507f8e887ec799afc87c&query=";
 const imageURL = "https://image.tmdb.org/t/p/w1280";
 //Search Variables
-const movieButton = document.getElementById("search-btn");
 const searchForm = document.getElementById("searchForm");
 const populateMovie = document.getElementById("populateMovie");
-//functions
-document.addEventListener("DOMContentLoaded", getMovies(themoviedbURL));
-movieButton.addEventListener("click", searchMovie);
+
 //getMovies function
 async function getMovies(linkURL) {
   try {
     const movielist = await fetch(linkURL);
     const movieData = await movielist.json();
-    //console.log(movieData);
+
     movieData.results.forEach((element) => {
       const div = document.createElement("div");
       const img = document.createElement("img");
@@ -36,15 +33,15 @@ async function getMovies(linkURL) {
     console.log(error);
   }
 }
+
 //seach function
-async function searchMovie() {
+async function searchMovie(e) {
   try {
     const srch = searchForm.value;
 
     if (srch != "") {
       populateMovie.innerHTML = "";
       await getMovies(`${searchURL}${srch}`);
-      searchForm.value = "";
     } else {
       populateMovie.innerHTML = "";
       await getMovies(themoviedbURL);
@@ -52,4 +49,8 @@ async function searchMovie() {
   } catch (error) {
     console.log(error);
   }
+  e.preventDefault();
 }
+//event listeners
+document.addEventListener("DOMContentLoaded", getMovies(themoviedbURL));
+searchForm.addEventListener("input", searchMovie);
